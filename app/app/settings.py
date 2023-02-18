@@ -71,6 +71,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'corsheaders',
     'djoser',
+    'django_filters',
 
     'user',
     'store',
@@ -222,4 +223,18 @@ SIMPLE_JWT = {
     'REFRESH_TOKEN_LIFETIME': timedelta(days=30),
     'ROTATE_REFRESH_TOKENS': True,
     'BLACKLIST_AFTER_ROTATION': True,
+}
+
+
+JAZZMIN_SETTINGS = {
+    # title of the window (Will default to current_admin_site.site_title if absent or None)
+    "site_title": "E-Buy Admin",
+    "site_header": "E-Buy",
+    "site_brand": "E-Buy",
+    "copyright": "E-Buy",
+    "welcome_sign": "Welcome to E-Buy Admin",
+    "show_ui_builder": False,
+    "login_logo": None,
+    "site_icon": None,
+
 }

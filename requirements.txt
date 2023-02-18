@@ -22,6 +22,7 @@ Jinja2==3.1.2
 Markdown==3.4.1
 MarkupSafe==2.1.2
 oauthlib==3.2.2
+Pillow==9.4.0
 psycopg2==2.9.5
 pycodestyle==2.10.0
 pycparser==2.21
@@ -38,5 +39,3 @@ tomli==2.0.1
 tzdata==2022.7
 uritemplate==4.1.1
 urllib3==1.26.14
-uWSGI>=2.0.21
-pillow>=9.4.0
