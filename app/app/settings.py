@@ -34,27 +34,29 @@ ALLOWED_HOSTS.extend(
     )
 )
 
+
 if DEBUG:
-    CORS_ALLOW_ALL_ORIGINS = True
+    # CORS_ORIGIN_ALLOW_ALL = True
+    CORS_ALLOWED_ORIGINS = [
+        "http://127.0.0.1:3000",
+        "http://localhost:3000",
+        "http://localhost:3001",
+    ]
+
 else:
     CORS_ALLOWED_ORIGINS = [
         "http://127.0.0.1:3000",
-        "https://food-donation-new.web.app",
-        "https://fooddonation.amalbabudev.in",
-        "https://api.fooddonation.amalbabudev.in",
+        "http://localhost:3000",
         "https://*.amalbabudev.in",
+        "http://localhost:3000/"
     ]
 
-
 CORS_ALLOW_CREDENTIALS = True
+
 CSRF_TRUSTED_ORIGINS = [
-    'https://api.fooddonation.amalbabudev.in/',
-    'https://*.amalbabudev.in/',
-    'https://*.amazonaws.com',
     'http://*.amalbabudev.in'
+    "http://localhost:3000",
 ]
-
-
 
 
 # Application definition
@@ -67,7 +69,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    
+
     'rest_framework',
     'corsheaders',
     'djoser',
@@ -75,12 +77,13 @@ INSTALLED_APPS = [
 
     'user',
     'store',
-    
+
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -121,7 +124,6 @@ DATABASES = {
         'PASSWORD': os.environ.get('DB_PASS'),
     }
 }
-
 
 
 # Password validation
@@ -233,7 +235,7 @@ JAZZMIN_SETTINGS = {
     "site_brand": "E-Buy",
     "copyright": "E-Buy",
     "welcome_sign": "Welcome to E-Buy Admin",
-    "show_ui_builder": False,
+    "show_ui_builder": True,
     "login_logo": None,
     "site_icon": None,
 

@@ -25,12 +25,13 @@ class ProductImageInline(admin.TabularInline):
 class CategoryImageInline(admin.StackedInline):
     model = models.CategoryImage
     readonly_fields: Sequence[str] = ['thumbnail']
-    max_num:int=1
+    max_num: int = 1
 
     def thumbnail(self, instance):
         if instance.image.name != '':
             return format_html(f'<img src="{instance.image.url}" class="thumbnail">')
         return ''
+
 
 @admin.register(models.Product)
 class Product(admin.ModelAdmin):
@@ -60,7 +61,7 @@ class categoryAdmin(admin.ModelAdmin):
     """
     list_display = ['title', 'product_count']
     search_fields = ['title']
-    inlines=[CategoryImageInline]
+    inlines = [CategoryImageInline]
 
     @admin.display(ordering='product_count')
     def product_count(self, category):
@@ -78,3 +79,34 @@ class categoryAdmin(admin.ModelAdmin):
         return super().get_queryset(request).annotate(
             product_count=Count('products')
         )
+
+
+class OrderItemInline(admin.TabularInline):
+    model = models.OrderItem
+    autocomplete_fields = ['product']
+    extra: int = 0
+    min_num = 1
+    max_num = 20
+
+
+@admin.register(models.Order)
+class OrderAdmin(admin.ModelAdmin):
+    list_display = ['id',
+                    'user', 'total_price', 'is_delivered', 'is_shipped',  'is_cancelled']
+    list_editable: Sequence[str] = [
+        'is_delivered', 'is_shipped', 'is_cancelled']
+
+    list_per_page = 10
+    # Form customization
+    autocomplete_fields: Sequence[str] = ['user']
+    search_fields=['id','user','total_price']
+    inlines = [OrderItemInline]
+
+@admin.register(models.Feedback)
+class FeedbackAdmin(admin.ModelAdmin):
+    list_display = ['name', 'mobile', 'email', 'comment',]
+    search_fields=['name','email','mobile','comment']
+
+# @admin.register(models.Cart)
+# class CartAdmin(admin.ModelAdmin):
+#     pass
